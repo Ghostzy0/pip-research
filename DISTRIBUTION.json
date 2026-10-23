@@ -1,0 +1,29 @@
+{
+  "products": [
+    {
+      "alias": "baseline-enhanced",
+      "bundle": "uk.pipreps.research.baseline.enhanced",
+      "display": "Research Baseline Enhanced",
+      "product": "ResearchBaselineEnhanced",
+      "version": "0.2.0"
+    },
+    {
+      "alias": "pip",
+      "bundle": "uk.pipreps.research",
+      "display": "Pip Research",
+      "product": "PipResearch",
+      "version": "0.1.1"
+    },
+    {
+      "alias": "pip-enhanced",
+      "bundle": "uk.pipreps.research.enhanced",
+      "display": "Pip Research Enhanced",
+      "product": "PipResearchEnhanced",
+      "version": "0.2.0"
+    }
+  ],
+  "profile": "custom",
+  "repository": "pip-research",
+  "schema": 1,
+  "sharedCoreManifestSHA256": "c0f5d6e969b4d21dfed7f027a39bf90ea4193c4f1783695b374ba6ec7ba536e9"
+}

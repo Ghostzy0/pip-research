@@ -6,7 +6,7 @@ A native macOS notebook for asking questions about local documents and checking 
 
 The current source also implements editable manual research notes and recovery of unsaved note edits after an interrupted session. The shared test suite and both v3 profile clean-clone checks passed; native manual-notes interaction review remains pending. One controlled SIGTERM recovery test restored and saved a synthetic Unicode note after relaunch; Cmd-Q while the dirty editor modal was open showed no visible quit or alert, which remains unresolved.
 
-The shared default suite completed 68 cases: 67 passed, one opt-in live test was skipped, and none failed. Both v3 profile exports passed independent fresh local-clone tests (67 passed, one opt-in live skip, 68 total cases); the custom profile built and signature-verified three products and the replica profile built and signature-verified one. Bundle metadata/resources matched and executable private-path scans were clean. Public repository publication and a independent clean-clone review of this current export remains pending. Package scripts remove local debug metadata from the copied executable before signing. This does not establish reference parity, native manual-notes acceptance or accepted local generation.
+The shared default suite completed 68 cases: 67 passed, one opt-in live test was skipped, and none failed. Both v3 profile exports passed independent fresh local-clone tests (67 passed, one opt-in live skip, 68 total cases); the custom profile built and signature-verified three products and the replica profile built and signature-verified one. Bundle metadata/resources matched and executable private-path scans were clean. The source is published in this repository. Independent final export review and hosted macOS 15 / Swift 6.1 tests and release-product builds passed; see [publication and package verification](docs/PUBLICATION.md). Package scripts remove local debug metadata from the copied executable before signing. This does not establish reference parity, native manual-notes acceptance or accepted local generation.
 
 ## What it does
 
@@ -29,7 +29,7 @@ This repository contains exactly the following runnable editions:
 | pip | PipResearch | Pip Research | 0.1.1 |
 | pip-enhanced | PipResearchEnhanced | Pip Research Enhanced | 0.2.0 |
 
-Neutral Core is distributed from the separate, planned pip-research-replica repository. The two planned repositories are not yet created or published. See [the edition matrix](docs/EDITION-MATRIX.md) for the requested split.
+Neutral Core is maintained in the separate [pip-research-replica repository](https://github.com/Ghostzy0/pip-research-replica). See [the edition matrix](docs/EDITION-MATRIX.md) for the requested split.
 
 ## Build
 

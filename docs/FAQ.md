@@ -18,7 +18,7 @@ No. Evidence responses locate source passages; matching text and citation syntax
 
 ## Can I write manual notes?
 
-All four variants implement notebook-scoped manual notes, independent of imported sources and generated drafts. Notes are included in Markdown exports. Unsaved edits can be recovered from an app-owned local sidecar. A scene keeps its captured notebook target, and only one Notes editor can own a given notebook across scenes. On app quit, open editors receive Save, Discard, or Cancel choices; termination waits for successful save/recovery work. This resumed coordination is covered by source tests but still needs packaged native UI acceptance, including Cmd-Q and multiple-window behavior.
+All four variants implement notebook-scoped manual notes, independent of imported sources and generated drafts. A scene keeps its captured notebook target, and only one Notes editor can own a given notebook across scenes. Source now routes normal AppKit termination through a deferred coordinator for Save, Discard, or Cancel and has four bridge tests for its exactly-once reply. The packaged Dock, menu, Cmd-Q, window-close, and multiwindow flows still need native acceptance.
 
 ## What differs between the editions?
 

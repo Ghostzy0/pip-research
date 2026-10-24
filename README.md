@@ -4,7 +4,7 @@ A native macOS notebook for asking questions about local documents and checking 
 
 **Experimental.** The evidence workflow retrieves source passages and citations locally. Answers and citation syntax do not establish that a claim is true or complete; compare the original context and conflicting sources.
 
-The source implements notebook-scoped manual notes and interrupted-edit recovery. The resumed Notes design gives a scene a captured notebook target and allows one editor owner per notebook across scenes. App quit asks open editors to Save, Discard, or Cancel and waits for persistence/recovery before termination. Source tests cover the coordination; packaged native Notes/quit acceptance remains open.
+The source implements notebook-scoped manual notes and interrupted-edit recovery. Each scene retains its captured notebook target, with one editor owner per notebook. A shared AppKit termination delegate routes normal termination through the deferred Save/Discard/Cancel coordinator; four source tests cover its exactly-once reply. Native Dock/menu/Cmd-Q/window-close acceptance remains open.
 
 ## Editions in this repository
 
@@ -35,6 +35,6 @@ Each edition stores its data separately under Application Support. Storage is re
 
 ## Qualification status
 
-The 24 October qualification-3 default suite completed 76 cases: 73 passed, 3 opt-in live-writer cases skipped, 0 failures. All four source-declared products built, passed ad-hoc signature verification, and passed private-path string scans. Separately, an opt-in live run passed conflict/persistence and hostile-source cases; absent-fact failed two expectations. These results do not establish general grounding, native Notes acceptance, accessibility, clean-clone review of the resumed exports, or publication of the intended `0.1.2`/`0.2.1` packages. See [public testing status](TESTING.md).
+The 24 October qualification-4 default suite completed 80 cases: 77 passed, 3 opt-in live-writer cases skipped, 0 failures. All four source-declared products built, passed ad-hoc signature verification, and passed private-path string scans. Separately, an opt-in live run passed conflict/persistence and hostile-source cases; absent-fact failed two expectations. These results do not establish general grounding, native Notes acceptance, accessibility, clean-clone review of the resumed exports, or publication of the intended `0.1.2`/`0.2.1` packages. See [public testing status](TESTING.md).
 
 Full NotebookLM/Gemini Notebook parity, web/video/cloud imports, OCR, audio/Studio generation, and broader accessibility/device acceptance remain open. See [roadmap](FUTURE-IDEAS.md), [foundation and notices](docs/FOUNDATION.md), and [publication history](docs/PUBLICATION.md).

@@ -30,11 +30,11 @@ In either Plus edition, save an exact cited passage to the research collection. 
 
 All four editions provide notebook-scoped manual notes. Open **Notes**, create a note, edit its title/body, and save; notes appear in notebook Markdown export. Pending edits may be recovered from a local app-owned sidecar. Only one Notes editor may own a given notebook across scenes; each scene retains the notebook it opened, even if another scene changes selection.
 
-The source routes normal AppKit termination through a deferred Save/Discard/Cancel coordinator and has four bridge tests for its exactly-once reply. This is not packaged UI acceptance: exercise Dock, app menu, Cmd-Q, window close, multiple windows, pending writes, and cancellation before claiming the quit flow is accepted.
+The current source starts normal termination with AppKit's immediate cancel response while the asynchronous Save/Discard/Cancel coordinator runs on the normal run loop. It permits one guarded termination reentry only if the model identity, session revision, and empty Notes session registry still match. It does not use a `terminateLater`/reply guarantee. This is source behavior, not packaged UI acceptance.
 
 ## Qualification status
 
-On 24 October 2026, the default source suite completed 80 cases: 77 passed, 3 opt-in live-writer cases skipped, 0 failures. All four source-declared release products built and passed ad-hoc signature verification and private-path string scans. These checks do not demonstrate the native workflow described above, accessibility, full reference parity, or public release of the intended `0.1.2`/`0.2.1` packages. The previous alpha links and current evidence boundaries are in [publication history](PUBLICATION.md) and [testing](../TESTING.md).
+Qualification 7 completed 85 cases: 82 passed, 3 opt-in live-writer cases skipped, 0 failed. All four products built and passed ad-hoc signature and private-path checks. These are local source/package checks, not native UI acceptance. Hosted 77-pass/3-skip checks qualify the earlier AppKit bridge only; fresh public-payload CI remains outstanding. A narrow native slice on the previous packaged candidate exercised synthetic Notes create/save/edit/reopen and observed Done, Cancel, and Save. Dirty Cmd-Q and enabled menu Quit produced no prompt; the process ID was not checked, so whether the app had quit is unresolved and the cause is unproven. The current source has not been run natively. See [publication history](PUBLICATION.md) and [testing](../TESTING.md).
 
 ## Optional local drafting
 

@@ -18,7 +18,7 @@ No. Evidence responses locate source passages; matching text and citation syntax
 
 ## Can I write manual notes?
 
-All four variants implement notebook-scoped manual notes, independent of imported sources and generated drafts. A scene keeps its captured notebook target, and only one Notes editor can own a given notebook across scenes. Source now routes normal AppKit termination through a deferred coordinator for Save, Discard, or Cancel and has four bridge tests for its exactly-once reply. The packaged Dock, menu, Cmd-Q, window-close, and multiwindow flows still need native acceptance.
+All four variants implement notebook-scoped manual notes, independent of imported sources and generated drafts. A scene keeps its captured notebook target, and only one Notes editor can own a given notebook across scenes. The current source begins normal termination with AppKit's immediate cancel response while an asynchronous Save/Discard/Cancel coordinator runs. It permits one guarded termination reentry only if model identity, session revision, and the empty Notes session registry still match. It does not use a `terminateLater`/reply guarantee. The current source has not been run natively. A limited native slice on the previous packaged candidate exercised synthetic Notes create/save/edit/reopen and observed Done, Cancel, and Save; dirty Cmd-Q and enabled menu Quit produced no prompt, and the process ID was not checked. Quit acceptance and the cause remain unresolved.
 
 ## What differs between the editions?
 

@@ -5,21 +5,21 @@
       "bundle": "uk.pipreps.research.baseline.enhanced",
       "display": "Research Baseline Enhanced",
       "product": "ResearchBaselineEnhanced",
-      "version": "0.2.0"
+      "version": "0.2.1"
     },
     {
       "alias": "pip",
       "bundle": "uk.pipreps.research",
       "display": "Pip Research",
       "product": "PipResearch",
-      "version": "0.1.1"
+      "version": "0.1.2"
     },
     {
       "alias": "pip-enhanced",
       "bundle": "uk.pipreps.research.enhanced",
       "display": "Pip Research Enhanced",
       "product": "PipResearchEnhanced",
-      "version": "0.2.0"
+      "version": "0.2.1"
     }
   ],
   "profile": "custom",

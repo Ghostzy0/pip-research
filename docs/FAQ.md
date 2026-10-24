@@ -2,48 +2,40 @@
 
 ## What is Pip Research?
 
-Pip Research is an experimental native macOS notebook for asking questions about local PDF, UTF-8 text and Markdown sources. It retrieves passages from the sources, shows citations and can open the cited location. It is an independent project with original MIT-licensed code; it is not affiliated with NotebookLM, Gemini, Google, Apple, Ollama or Qwen.
+Pip Research is an experimental native macOS notebook for asking questions about local PDF, UTF-8 text, and Markdown sources. It retrieves passages, shows citations, and can open the cited location. It is an independent original implementation and is not affiliated with NotebookLM, Gemini, Google, Apple, Ollama, or Qwen.
 
-## What do I need to build it?
+## What do I need?
 
-Use macOS 14 or newer with Swift 6 from Xcode or Apple's Command Line Tools. Clone or download the source, then run `swift test --jobs 2` and one of this profile’s three `./scripts/build.sh` commands shown in the README. No third-party Swift packages, account, server or model weights are needed for notebook and evidence workflows. The tested host is Apple silicon on macOS 27; macOS 14 and Intel runtime acceptance have not been established.
+Build from source with macOS 14+ and Swift 6. The core build requires no third-party Swift packages, account, model, or server. The tested development host is Apple silicon; macOS 14 and Intel runtime acceptance remain unverified. Public source/profile and package status is summarized in [publication history](PUBLICATION.md).
 
 ## Does it send documents to a cloud service?
 
-The evidence workflow is local and makes no network request. Imported documents are copied into the selected edition's Application Support folder. Optional drafting is a separate feature, disabled by default; when requested it contacts only a fixed loopback Ollama endpoint and sends the question and selected passages to that local service. It has no cloud fallback. A targeted request to the tested local Qwen model returned valid JSON but omitted every required citation marker and incorrectly said conflicting sources agreed. Strict validation rejected it; no draft was saved, and generation remains unaccepted. See [Security](../SECURITY.md) and [Local drafting](LOCAL-DRAFTING.md).
+Evidence mode makes no network request. Sources are copied to the chosen edition's local Application Support folder. Optional local drafting is disabled by default; when explicitly requested, the question and selected passages go to a fixed loopback Ollama service. There is no cloud fallback and the app does not download weights. A bounded synthetic Qwen3 1.7B probe returned valid JSON with the required citation IDs and identified a conflict, but also misleadingly interpreted source/revision dates. Separately, an opt-in live run passed one conflict-plus-persistence case and one hostile-source case; the absent-fact case failed two expectations: asked for public-holiday hours, it returned `The station garden closes at 18:00 on weekdays [1].` It did not explicitly invent holiday hours, but failed to acknowledge that the source gives weekday hours only and no public-holiday information. This is not general grounding evidence; drafting remains experimental. See [Security](../SECURITY.md) and [Local drafting](LOCAL-DRAFTING.md).
 
 ## Are answers guaranteed to be correct?
 
-No. The core returns source passages and citations; matching text and citation syntax do not prove a claim is true or complete. Compare the original context and all conflicting sources. An empty answer can mean missing information, wording mismatch or a retrieval limitation.
-
-## What is the difference between evidence and a draft?
-
-An evidence answer is assembled from retrieved source passages and exact anchors. An optional generated draft is a separate synthesis request to the local writer. An earlier request returned malformed inner JSON. After the request schema was corrected, the tested model returned valid JSON but omitted required citations and falsely claimed conflicting sources agreed. The strict validator rejected it and no draft was saved. Successful drafting has not been demonstrated. Do not treat draft citations as proof of grounding.
+No. Evidence responses locate source passages; matching text and citation syntax do not prove that a claim is true or complete. Compare original context and conflicting sources. An empty result can also reflect a retrieval limitation.
 
 ## Can I write manual notes?
 
-Yes. All four editions have notebook-scoped manual notes, separate from imported sources and generated content. Notes are stored as readable text in the local library and included in notebook Markdown exports. Unsaved editor text may be recovered atomically from a `.note-drafts/` sidecar in the same app-support folder; the editor offers an explicit restore or discard choice. The implementation and core tests are in place. One controlled native SIGTERM recovery restored and saved a synthetic Unicode note after relaunch. Cmd-Q while the dirty editor modal was open showed no visible quit or alert; full native interaction review remains pending.
+All four variants implement notebook-scoped manual notes, independent of imported sources and generated drafts. Notes are included in Markdown exports. Unsaved edits can be recovered from an app-owned local sidecar. A scene keeps its captured notebook target, and only one Notes editor can own a given notebook across scenes. On app quit, open editors receive Save, Discard, or Cancel choices; termination waits for successful save/recovery work. This resumed coordination is covered by source tests but still needs packaged native UI acceptance, including Cmd-Q and multiple-window behavior.
 
-## Can I search my saved research?
+## What differs between the editions?
 
-The enhanced editions add notebook-scoped search over saved question history and saved evidence excerpts. They do not provide web search or a full-text search engine across every original document. The plain editions do not expose Research tools. See the [edition matrix](EDITION-MATRIX.md).
+Neutral Core and Pip Core provide the common notebook/evidence workflow. Neutral Plus and Pip Plus add notebook-scoped search over saved questions and excerpts plus saved exact citations with optional labels and annotations. Neutral Core is published separately from the three custom editions. Intended next versions are `0.1.2` Core and `0.2.1` Plus; they are not yet published. See [the edition matrix](EDITION-MATRIX.md).
 
 ## Does it read scanned PDFs?
 
-No OCR is built in. PDFs need selectable text. Scan-only pages may import without useful text; run an OCR tool separately if you need searchable text, and review the resulting document before importing it.
+No OCR is built in. PDFs need selectable text. Scan-only pages may import without useful text; use a separate OCR tool and inspect its output before importing.
 
 ## Where is data stored and how do I back it up?
 
-Each edition has a separate Application Support folder. `Originals/` holds copied sources; `library.json` stores notebook content, extracted text, chats, manual notes and saved excerpts. Unsaved manual-note drafts may be stored in `.note-drafts/` inside that same folder. Storage is readable and is not encrypted by this app. Close the app and copy the entire relevant folder to back it up. Markdown export is useful for portable notes, but does not replace a full library backup.
-
-## What happens when I delete a source or notebook?
-
-Removing a source invalidates citation navigation but retains earlier quoted evidence in chat history and saved excerpts. Removing an excerpt removes that saved item. Removing the notebook removes its chats and saved excerpts too. Cleanup is not secure forensic erasure, and exported files or external originals remain under your control.
+Each edition has a separate Application Support folder. `Originals/` holds copied sources; `library.json` stores notebook content, extracted text, chats, notes, and saved excerpts. Pending note edits may also be in `.note-drafts/`. Storage is readable and not encrypted by this app. Close the app and back up the entire edition folder. Markdown export is useful for portable notes but is not a full library backup.
 
 ## Can I switch editions or downgrade?
 
-The editions use separate default folders and do not automatically migrate or merge libraries. Back up the entire folder while the app is closed before changing versions or editions. Do not open an enhanced library with a writer older than `0.1.1`: it may ignore or discard fields it does not recognize. Current `0.1.1` baseline code can preserve saved excerpts while hiding enhanced controls; that is not a cross-edition migration interface.
+Editions do not automatically migrate or merge libraries. Back up the full folder while the app is closed before changing editions or versions. Compatibility with the exact published `0.1.1`/`0.2.0` packages and note-recovery sidecars must be checked before relying on downgrade or cross-edition behavior. Never open a newer library with an older writer unless an explicit tested procedure covers it.
 
 ## Is it fully equivalent to NotebookLM?
 
-No. Full generative and studio workflows, OCR, web/video/cloud imports, signed-in reference comparison and broader accessibility/device acceptance remain incomplete. Manual notes are implemented in all editions. One controlled SIGTERM recovery flow passed, but Cmd-Q while the dirty editor modal was open showed no visible quit or alert; full native notes workflow and reference review remain pending. See [parity](../PARITY.md) for the current scope.
+No. Neutral Core is an experimental partial workflow recreation. Generated Studio/audio workflows, OCR, web/video/cloud imports, full reference comparison, and broad accessibility/device acceptance remain incomplete. See [parity](../PARITY.md) and [testing](../TESTING.md).

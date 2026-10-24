@@ -1,15 +1,15 @@
 # Changelog
 
-## 0.2.0-alpha.1 — experimental, under qualification
+## Unreleased — intended next versions: Neutral Plus 0.2.1, Pip Core 0.1.2, Pip Plus 0.2.1
 
-This repository profile contains Neutral Plus, Pip Core and Pip Plus. They share the in-process ResearchCore and ResearchDesktop implementation, keep separate Application Support folders, and use distinct executable products and bundle identifiers. Neutral Core is distributed only by the separate planned replica repository.
+These version numbers identify the next source/package batch; this entry does not announce a published release. The existing 23 October experimental alphas remain available and unchanged. See [publication history](docs/PUBLICATION.md).
 
-Current source implements manual research notes and interrupted-session draft recovery in all four editions. One controlled native SIGTERM recovery flow passed for a synthetic Unicode note; a dirty-modal Cmd-Q attempt showed no visible quit or alert and remains unresolved.
+- Added manual notebook notes and interrupted-edit recovery across all four variants. The resumed editor keeps its scene's captured notebook target, enforces one Notes owner per notebook across scenes, and coordinates explicit Save, Discard, or Cancel choices at app quit. Source/state coverage is present; packaged native interaction acceptance remains pending.
+- Qualification-3 default Swift suite: 76 cases: 73 passed, 3 opt-in live-writer cases skipped, 0 failures. All four products were built, ad-hoc signature-verified, and checked for private-path strings. In a separate opt-in run, conflict-plus-persistence and hostile-source cases passed; absent-fact failed two expectations: asked for public-holiday hours, it returned `The station garden closes at 18:00 on weekdays [1].` without acknowledging that the source only gives weekday hours. It did not explicitly invent holiday hours.
+- Enhanced editions add notebook-scoped search over saved questions and excerpts, plus exact saved citation excerpts with optional labels and annotations. Neutral Plus and Pip Plus share this enhancement set; Core variants do not expose Plus controls.
+- Optional local Qwen3 1.7B drafting remains experimental and off by default. A bounded synthetic response included the required citation IDs and identified the source disagreement, but misleadingly interpreted source dates. Separately, an opt-in live run passed conflict-plus-persistence and hostile-source cases; absent-fact failed two expectations: asked for public-holiday hours, it returned `The station garden closes at 18:00 on weekdays [1].` without acknowledging that the source only gives weekday hours. It did not explicitly invent holiday hours. One persistence scenario passed, but general grounding remains unverified.
+- The historical experimental alpha releases and their assets are not replaced by this unreleased source entry.
 
-The shared default suite completed 68 cases (67 passed, one opt-in live test skipped, zero failures). After the package audit found local debug metadata in the first artifacts, all four bundles were refreshed from the qualified release binaries with local debug metadata stripped before signing. Refreshed bundles passed signature and private-path checks with the original LICENSE and NOTICES bundled.
+## 23 October 2026 — historical experimental alpha
 
-Both v3 profile exports subsequently passed independent fresh local-clone test/build/signature checks: three custom products and one replica product. Native manual-notes interaction review, broader interface accessibility review and public remote publication remain pending.
-
-Enhanced editions add notebook-scoped search over saved questions and exact citation excerpts with optional labels/notes, source navigation, copy and Markdown export. These additions remain under qualification; see TESTING for the exact source/build evidence and remaining native review.
-
-Optional local drafting is off by default and remains unaccepted. After correcting the request grammar and schema, the tested writer returned valid JSON without citations and asserted an unsupported agreement between sources; the app rejected it, saved no draft and unloaded the model. No full NotebookLM/Gemini Notebook parity or stable-production claim is made.
+The previous public alpha published Neutral Plus, Pip Core, and Pip Plus in `pip-research`, and Neutral Core in `pip-research-replica`. It used Core `0.1.1` and Plus `0.2.0`. See the historical release links and evidence boundaries in [publication history](docs/PUBLICATION.md).

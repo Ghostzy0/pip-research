@@ -1,46 +1,41 @@
 # How to try Pip Research
 
-Pip Research is an experimental local macOS notebook. This guide uses synthetic sample sources so you can check the workflow without importing personal documents.
+This guide uses the built-in synthetic sample, so you can explore without importing personal documents.
 
 ## Build and open an edition
 
-Install Swift 6 from Xcode or Apple's Command Line Tools on macOS 14 or newer. From the repository root, run:
+Requires macOS 14+ and Swift 6 from Xcode or Apple's Command Line Tools. From the repository root:
 
 ```sh
-swift test --jobs 2
 ./scripts/build.sh pip
 open 'dist/Pip Research.app'
 ```
 
-This repository profile builds Pip Core, Neutral Plus and Pip Plus (`baseline-enhanced`, `pip`, `pip-enhanced`). Neutral Core (`baseline`) is excluded here and belongs to the separately planned `pip-research-replica` repository. Enhanced builds use `baseline-enhanced` or `pip-enhanced`; see the [edition matrix](EDITION-MATRIX.md) for versions, identifiers and separate storage folders. Local builds are ad-hoc signed, not Developer ID signed or notarised. Never disable macOS security globally.
+This custom repository builds Pip Core, Neutral Plus, and Pip Plus. Neutral Core is in the separate [`pip-research-replica`](https://github.com/Ghostzy0/pip-research-replica) repository. See the [edition matrix](EDITION-MATRIX.md) for versions, identifiers, and separate storage folders. Local builds are ad-hoc signed, not Developer ID signed or notarised; never disable macOS security globally.
 
 ## Ask a question and check the evidence
 
-1. Choose **Try sample research** in Pip, or **Open sample research** in the neutral baseline. The sample contains synthetic Markdown, text and a two-page PDF with dates and a conflicting closing time.
-2. Select the sources that should support your question.
-3. Ask the suggested question. Check the answer against each source, especially where the sources disagree.
-4. Open a citation to inspect the exact passage, page or heading. For a PDF, verify the highlighted page and sentence in the original copy.
-5. Ask about the sample budget to exercise a PDF citation. If no evidence appears, try wording that matches the source and inspect the source list; an empty result does not prove the information is absent.
-6. Export the notebook as Markdown if you want a readable copy outside the app.
+1. Choose **Try sample research** in Pip, or **Open sample research** in Neutral Core.
+2. Select the sources to use and ask the suggested question.
+3. Compare the cited passages, especially where the sources disagree.
+4. Open a citation to inspect its exact passage, page, or heading. For a PDF, confirm the highlighted location in the copied source.
+5. Try the sample budget question to open a PDF citation. An empty result does not prove the sources contain no answer.
+6. Export the notebook as Markdown when you want a readable copy outside the app.
 
 ## Save and find an excerpt
 
-In an enhanced edition, save an exact cited passage to the research collection. Add an optional label or note, then use Research tools to find saved questions or excerpts within the current notebook. Reopen the excerpt's citation to return to its source and include the saved collection in the notebook's Markdown export. Restart the app to check that the notebook, history and excerpt persist. Plain editions do not show these controls.
+In either Plus edition, save an exact cited passage to the research collection. Add an optional label or note, then use Research tools to search saved questions and excerpts within the notebook. Reopen the citation, export the notebook, and restart to inspect persistence. Core editions do not expose these Plus controls.
 
 ## Write a manual research note
 
-All four editions include notebook-scoped manual notes, separate from imported sources and generated drafts. Open **Notes**, create a note, enter a title and body, and save; notes are included in notebook Markdown export. If the app detects an unsaved editor recovery copy, choose to restore or discard it. The feature is implemented and covered by core tests. A bounded native SIGTERM recovery check restored and saved an exact synthetic Unicode note after relaunch. Cmd-Q while the dirty editor modal was open produced no visible quit or alert; this remains unresolved, and full notes interaction acceptance is pending.
+All four editions provide notebook-scoped manual notes. Open **Notes**, create a note, edit its title/body, and save; notes appear in notebook Markdown export. Pending edits may be recovered from a local app-owned sidecar. Only one Notes editor may own a given notebook across scenes; each scene retains the notebook it opened, even if another scene changes selection.
 
-## Import your own material
+When quitting with Notes editors open, the app asks each editor to Save, Discard, or Cancel. It waits for save and recovery work before quitting. This behavior has source tests but is not yet accepted in the packaged native UI. The exact current Notes interaction, dirty Cmd-Q, multi-window and failure paths still need hands-on review.
 
-Create a notebook and import a PDF, UTF-8 TXT or Markdown file. The app copies the selected source into its edition-specific Application Support directory. Limits are 30 MB per source, 2,000,000 extracted UTF-16 units and 500 PDF pages. Scanned PDFs need selectable text; there is no built-in OCR or upload service. Confirm the right sources are selected before asking.
+## Qualification status
 
-## Back up and remove data
-
-Close the app before copying the entire edition's Application Support folder. The app stores readable JSON and does not encrypt it; note-recovery sidecars are also readable. Removing a source keeps historical quoted text but disables its citation navigation; removing a notebook removes its chats, manual notes and saved excerpts. Deletion is not secure forensic erasure. Exported Markdown and original external files are separate and must be managed separately.
-
-Each edition uses a different folder, with no automatic cross-edition migration. Back up before changing editions or versions. Avoid opening an enhanced library with an older-than-`0.1.1` writer because it may discard fields it does not understand. See [FAQ](FAQ.md), [Security](../SECURITY.md) and [Testing](../TESTING.md).
+On 24 October 2026, the default source suite completed 76 cases: 73 passed, 3 opt-in live-writer cases skipped, with 0 failures. All four source-declared release products built and passed ad-hoc signature verification and private-path string scans. These checks do not demonstrate the native workflow described above, accessibility, full reference parity, or public release of the intended `0.1.2`/`0.2.1` packages. The previous alpha links and current evidence boundaries are in [publication history](PUBLICATION.md) and [testing](../TESTING.md).
 
 ## Optional local drafting
 
-Optional Qwen drafting is disabled by default and currently unaccepted. The first tested request returned non-JSON inner content. After the request schema was corrected, the pinned model returned valid JSON but omitted citations and falsely claimed that conflicting sources agreed. Strict validation rejected it; no draft was saved. The evidence workflow and manual notes work separately. Do not expect accepted generated drafts from this build. See [Local drafting details](LOCAL-DRAFTING.md).
+Local Qwen drafting is off by default, experimental, and requires a separately installed local service and verified model. One bounded synthetic Qwen3 1.7B response contained the requested citation IDs and named the source conflict, but added a misleading interpretation of the source dates. The separate opt-in conflict-plus-persistence and hostile-source cases passed; absent-fact failed two expectations: asked for public-holiday hours, it returned `The station garden closes at 18:00 on weekdays [1].` without acknowledging that the source only gives weekday hours. It did not explicitly invent holiday hours. Do not treat generated text as verified evidence; see [local drafting details](LOCAL-DRAFTING.md).

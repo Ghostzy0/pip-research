@@ -4,7 +4,7 @@ A native macOS notebook for asking questions about local documents and checking 
 
 **Experimental.** The evidence workflow retrieves source passages and citations locally. Answers and citation syntax do not establish that a claim is true or complete; compare the original context and conflicting sources.
 
-The source implements notebook-scoped manual notes and interrupted-edit recovery. Each scene retains its captured notebook target, with one editor owner per notebook. Normal termination begins with AppKit's immediate cancel response while the asynchronous Save/Discard/Cancel coordinator runs on the normal run loop. One guarded termination reentry is permitted only if model identity, session revision, and the empty session registry still match. This source behavior is not native UI acceptance.
+The source implements notebook-scoped manual notes and interrupted-edit recovery. Each scene retains its captured notebook target, with one editor owner per notebook. Q8 lets termination ingress through the Notes sheet reach the existing Save/Discard/Cancel coordinator: it uses SwiftUI's [`presentationPreventsAppTermination(false)`](https://developer.apple.com/documentation/swiftui/view/presentationpreventsapptermination(_:)) on macOS 15.4+ with Swift 6.1+, and a scoped, restoring [AppKit modal-window setting](https://developer.apple.com/documentation/appkit/nswindow/preventsapplicationterminationwhenmodal) on macOS 14–15.3 and earlier compiler versions. This source change is not native UI acceptance.
 
 ## Editions in this repository
 
@@ -35,6 +35,6 @@ Each edition stores its data separately under Application Support. Storage is re
 
 ## Qualification status
 
-Qualification 7 completed 85 cases: 82 passed, 3 opt-in live-writer cases skipped, 0 failed. All four products built and passed ad-hoc signature and private-path checks. These are local source/package checks, not native UI acceptance. Hosted 77-pass/3-skip checks qualify the earlier AppKit bridge only; fresh hosted CI for the current public payload remains outstanding. See [public testing status](TESTING.md).
+Qualification 8 completed 87 cases: 84 passed, 3 opt-in live-writer cases skipped, 0 failed. All four products built and passed ad-hoc signature, resource, and private-path checks. These are local source/package checks, not native UI acceptance. Hosted 82-pass/3-skip checks qualify Q7 only; fresh hosted CI for the Q8 public payload remains outstanding. On exact Q7/v4, synthetic Notes save/reopen and restart persistence passed, but dirty Cmd-Q and menu Quit showed no alert and the same PID remained alive; clean main-window Quit exited. Q8 remains untested natively. See [public testing status](TESTING.md).
 
 Full NotebookLM/Gemini Notebook parity, web/video/cloud imports, OCR, audio/Studio generation, and broader accessibility/device acceptance remain open. See [roadmap](FUTURE-IDEAS.md), [foundation and notices](docs/FOUNDATION.md), and [publication history](docs/PUBLICATION.md).

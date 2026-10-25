@@ -3,9 +3,9 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 edition="${1:-}"
 case "$edition" in
-  baseline-enhanced) product=ResearchBaselineEnhanced; display='Research Baseline Enhanced'; identifier=uk.pipreps.research.baseline.enhanced; version=0.2.0 ;;
-  pip) product=PipResearch; display='Pip Research'; identifier=uk.pipreps.research; version=0.1.1 ;;
-  pip-enhanced) product=PipResearchEnhanced; display='Pip Research Enhanced'; identifier=uk.pipreps.research.enhanced; version=0.2.0 ;;
+  baseline-enhanced) product=ResearchBaselineEnhanced; display='Research Baseline Enhanced'; identifier=uk.pipreps.research.baseline.enhanced; version=0.2.1 ;;
+  pip) product=PipResearch; display='Pip Research'; identifier=uk.pipreps.research; version=0.1.2 ;;
+  pip-enhanced) product=PipResearchEnhanced; display='Pip Research Enhanced'; identifier=uk.pipreps.research.enhanced; version=0.2.1 ;;
   *) echo 'Usage: scripts/package.sh [baseline-enhanced|pip|pip-enhanced] [binary]' >&2; exit 2 ;;
 esac
 binary="${2:-.build/release/$product}"
@@ -27,6 +27,7 @@ cat > "$output/Contents/Info.plist" <<PLIST
 <key>CFBundleShortVersionString</key><string>$version</string>
 <key>CFBundleVersion</key><string>1</string>
 <key>LSMinimumSystemVersion</key><string>14.0</string>
+<key>NSPrincipalClass</key><string>ResearchApplication</string>
 <key>NSHighResolutionCapable</key><true/>
 <key>NSHumanReadableCopyright</key><string>Copyright 2026 Pip Research contributors. MIT.</string>
 </dict></plist>
